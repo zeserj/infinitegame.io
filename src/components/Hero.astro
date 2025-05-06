@@ -1,0 +1,113 @@
+---
+import EmailSignup from './EmailSignup.astro';
+---
+
+<section class="relative pt-32 pb-20 md:pt-36 md:pb-32 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-br from-secondary/40 to-white -z-10"></div>
+  
+  <div class="container-custom">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <!-- Left column: Text and CTA -->
+      <div class="order-2 md:order-1 animate-fade-up animate-once animate-ease-in-out">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+          <span class="font-orbitron text-primary">Level up your life,</span>
+          <br>one task at a time
+        </h1>
+        
+        <p class="text-lg md:text-xl text-gray-700 mb-8 max-w-xl">
+          InfiniteGame transforms your to-do list into an engaging experience with AI-powered insights and game-like rewards. Make productivity fun again.
+        </p>
+        
+        <div class="space-y-8">
+          <div class="flex flex-wrap gap-4">
+            <a href="#signup" class="btn btn-primary">
+              Get Early Access
+            </a>
+            <a href="#features" class="btn btn-secondary">
+              Learn More
+            </a>
+          </div>
+          
+          <EmailSignup />
+        </div>
+      </div>
+      
+      <!-- Right column: iPhone mockup -->
+      <div class="order-1 md:order-2 flex justify-center animate-fade-left animate-once animate-ease-in-out">
+        <div class="relative w-64 md:w-80">
+          <!-- iPhone frame -->
+          <div class="relative w-full aspect-[9/19.5] bg-gray-900 rounded-[3rem] shadow-xl overflow-hidden border-[8px] border-gray-800">
+            <!-- App screenshot -->
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/90 to-primary/70">
+              <!-- App UI mockup -->
+              <div class="p-4 h-full flex flex-col">
+                <!-- Status bar -->
+                <div class="flex justify-between text-xs text-white/90 mb-2">
+                  <span>10:42</span>
+                  <div class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m-8 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                </div>
+                
+                <!-- App header -->
+                <div class="mb-4 text-white">
+                  <h3 class="font-orbitron text-xl font-bold">InfiniteGame</h3>
+                  <p class="text-xs text-white/80">Level 7 | 1250 XP</p>
+                </div>
+                
+                <!-- Task items -->
+                <div class="space-y-3">
+                  <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <div class="flex items-center gap-2">
+                      <div class="h-5 w-5 rounded-full bg-accent1 flex-shrink-0"></div>
+                      <span class="text-white font-medium">Complete project proposal</span>
+                    </div>
+                    <div class="ml-7 text-xs text-white/70 mt-1">+100 XP | Due today</div>
+                  </div>
+                  
+                  <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <div class="flex items-center gap-2">
+                      <div class="h-5 w-5 rounded-full bg-accent2 flex-shrink-0"></div>
+                      <span class="text-white font-medium">Morning workout routine</span>
+                    </div>
+                    <div class="ml-7 text-xs text-white/70 mt-1">+50 XP | Daily quest</div>
+                  </div>
+                  
+                  <div class="bg-white/10 p-3 rounded-lg backdrop-blur-sm">
+                    <div class="flex items-center gap-2">
+                      <div class="h-5 w-5 rounded-full bg-accent3 flex-shrink-0"></div>
+                      <span class="text-white font-medium">Research new techniques</span>
+                    </div>
+                    <div class="ml-7 text-xs text-white/70 mt-1">+75 XP | High priority</div>
+                  </div>
+                </div>
+                
+                <!-- Progress bar -->
+                <div class="mt-auto">
+                  <div class="mb-1 flex justify-between text-xs text-white">
+                    <span>Next level</span>
+                    <span>1250/2000 XP</span>
+                  </div>
+                  <div class="w-full h-2 bg-white/20 rounded-full overflow-hidden">
+                    <div class="h-full bg-accent1 rounded-full" style="width: 62%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Device shadow -->
+          <div class="absolute -bottom-6 left-0 right-0 h-6 bg-black/20 blur-xl mx-auto w-4/5 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+---
+---
+
+<header class="fixed w-full top-0 z-40 transition-all duration-300" id="site-header">
+  <div class="container-custom py-4 flex items-center justify-between">
+    <div class="flex items-center">
+      <a href="/" class="flex items-center gap-2">
+        <img src="/logo.svg" alt="InfiniteGame Logo" class="h-8 w-auto" />
+        <span class="text-xl md:text-2xl font-orbitron font-bold text-primary">
+          InfiniteGame
+        </span>
+      </a>
+    </div>
+    
+    <nav class="hidden md:flex items-center space-x-8">
+      <a href="#features" class="text-gray-700 hover:text-primary transition-colors">Features</a>
+      <a href="#how-it-works" class="text-gray-700 hover:text-primary transition-colors">How It Works</a>
+      <a href="#signup" class="text-gray-700 hover:text-primary transition-colors">Get Early Access</a>
+    </nav>
+    
+    <button id="mobile-menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-white w-full absolute top-full left-0 py-4 px-4 hidden shadow-md">
+    <nav class="flex flex-col space-y-4">
+      <a href="#features" class="text-gray-700 hover:text-primary transition-colors">Features</a>
+      <a href="#how-it-works" class="text-gray-700 hover:text-primary transition-colors">How It Works</a>
+      <a href="#signup" class="text-gray-700 hover:text-primary transition-colors">Get Early Access</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Handle header background change on scroll
+  const header = document.getElementById('site-header');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  // Change header background on scroll
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 10) {
+      header?.classList.add('bg-white', 'shadow-md');
+    } else {
+      header?.classList.remove('bg-white', 'shadow-md');
+    }
+  });
+  
+  // Initialize header state on page load
+  if (window.scrollY > 10) {
+    header?.classList.add('bg-white', 'shadow-md');
+  }
+  
+  // Mobile menu toggle
+  mobileMenuBtn?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+  
+  // Close mobile menu when clicking menu items
+  const mobileMenuItems = mobileMenu?.querySelectorAll('a');
+  mobileMenuItems?.forEach(item => {
+    item.addEventListener('click', () => {
+      mobileMenu?.classList.add('hidden');
+    });
+  });
+</script>

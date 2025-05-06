@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-primary: 123, 104, 238;
+    --color-secondary: 198, 224, 255;
+    --color-accent1: 250, 188, 42;
+    --color-accent2: 6, 214, 160;
+    --color-accent3: 249, 115, 22;
+  }
+
+  html {
+    font-family: 'Inter', sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  p {
+    line-height: 1.5;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-6 py-3 font-medium rounded-md transition-all duration-300;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-opacity-90;
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary border border-primary hover:bg-primary hover:text-white;
+  }
+
+  .container-custom {
+    @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
+  }
+}
