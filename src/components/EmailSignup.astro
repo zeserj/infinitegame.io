@@ -30,7 +30,7 @@
 </div>
 
 <script>
-  // Simple form handler for Brevo
+  // Form handler using server-side endpoint
   const form = document.getElementById('brevo-signup-form');
   
   form?.addEventListener('submit', async (e) => {
@@ -41,13 +41,28 @@
     
     if (!email) return;
     
-    // Here you would integrate with Brevo API
-    // For demonstration purposes, we'll just show a success message
-    // In a real implementation, you would send this data to your Brevo endpoint
-    
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 600));
+      // Show loading state
+      const submitButton = form.querySelector('button[type="submit"]');
+      if (submitButton) {
+        submitButton.textContent = 'Submitting...';
+        submitButton.setAttribute('disabled', 'true');
+      }
+      
+      // Call server-side endpoint instead of Brevo API directly
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to subscribe');
+      }
       
       // Show success message
       if (form) {
@@ -60,7 +75,24 @@
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Something went wrong. Please try again.');
+      
+      // Show error message
+      if (form) {
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+          submitButton.textContent = 'Join the Waitlist';
+          submitButton.removeAttribute('disabled');
+        }
+        
+        // Create error message element if it doesn't exist
+        let errorElement = form.querySelector('.error-message');
+        if (!errorElement) {
+          errorElement = document.createElement('div');
+          errorElement.className = 'error-message text-red-500 text-sm mt-2';
+          form.appendChild(errorElement);
+        }
+        errorElement.textContent = 'Something went wrong. Please try again.';
+      }
     }
   });
 </script>
