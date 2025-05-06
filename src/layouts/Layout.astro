@@ -4,11 +4,23 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  canonicalURL?: string;
+  type?: 'website' | 'article';
+  publishDate?: string;
 }
+
+// Set up site metadata
+const siteURL = "https://infinitegame.io"; // Update this with your actual domain
+const siteName = "InfiniteGame";
 
 const { 
   title, 
-  description = "Level up your life, one task at a time with InfiniteGame, an AI-powered to-do app."
+  description = "Level up your life, one task at a time with InfiniteGame, an AI-powered to-do app.",
+  image = "/og-image.png", // Changed from .jpg to .png to match your file
+  canonicalURL = new URL(Astro.url.pathname, siteURL).toString(),
+  type = "website",
+  publishDate
 } = Astro.props;
 ---
 
@@ -17,9 +29,38 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    {publishDate && <meta name="date" content={publishDate} />}
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, siteURL).toString()} />
+    <meta property="og:site_name" content={siteName} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, siteURL).toString()} />
     
     <!-- Preconnect to Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +69,21 @@ const {
     <!-- Font loading: Orbitron and Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <title>{title}</title>
+    <!-- Structured data for improved rich results -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": siteName,
+      "description": description,
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "iOS, Android",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/ComingSoon"
+      }
+    })} />
   </head>
   <body class="font-inter text-gray-800 bg-white">
     <slot />
