@@ -1,4 +1,11 @@
 ---
+// Get current path to determine if we're on homepage
+const isHomePage = Astro.url.pathname === '/';
+
+// Create the proper links based on current page
+const featuresLink = isHomePage ? '#features' : '/#features';
+const howItWorksLink = isHomePage ? '#how-it-works' : '/#how-it-works';
+const signupLink = isHomePage ? '#signup' : '/#signup';
 ---
 
 <header class="fixed w-full top-0 z-40 transition-all duration-300" id="site-header">
@@ -13,9 +20,9 @@
     </div>
     
     <nav class="hidden md:flex items-center space-x-8">
-      <a href="#features" class="text-gray-700 hover:text-primary transition-colors">Features</a>
-      <a href="#how-it-works" class="text-gray-700 hover:text-primary transition-colors">How It Works</a>
-      <a href="#signup" class="bg-primary hover:bg-primary-dark text-white font-medium px-5 py-2 rounded-full transition-colors shadow-md hover:shadow-lg">Get Early Access</a>
+      <a href={featuresLink} class="text-gray-700 hover:text-primary transition-colors">Features</a>
+      <a href={howItWorksLink} class="text-gray-700 hover:text-primary transition-colors">How It Works</a>
+      <a href={signupLink} class="bg-primary hover:bg-primary-dark text-white font-medium px-5 py-2 rounded-full transition-colors shadow-md hover:shadow-lg">Get Early Access</a>
     </nav>
     
     <button id="mobile-menu-btn" class="md:hidden text-gray-700 focus:outline-none">
@@ -28,9 +35,9 @@
   <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden bg-white w-full absolute top-full left-0 py-4 px-4 hidden shadow-md">
     <nav class="flex flex-col space-y-4">
-      <a href="#features" class="text-gray-700 hover:text-primary transition-colors">Features</a>
-      <a href="#how-it-works" class="text-gray-700 hover:text-primary transition-colors">How It Works</a>
-      <a href="#signup" class="bg-primary hover:bg-primary-dark text-white font-medium px-5 py-2 rounded-full inline-block text-center transition-colors shadow-md hover:shadow-lg">Get Early Access</a>
+      <a href={featuresLink} class="text-gray-700 hover:text-primary transition-colors">Features</a>
+      <a href={howItWorksLink} class="text-gray-700 hover:text-primary transition-colors">How It Works</a>
+      <a href={signupLink} class="bg-primary hover:bg-primary-dark text-white font-medium px-5 py-2 rounded-full inline-block text-center transition-colors shadow-md hover:shadow-lg">Get Early Access</a>
     </nav>
   </div>
 </header>
