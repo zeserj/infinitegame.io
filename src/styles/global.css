@@ -9,6 +9,7 @@
     --color-accent1: 250, 188, 42;
     --color-accent2: 6, 214, 160;
     --color-accent3: 249, 115, 22;
+    scroll-padding-top: 6rem; /* Add scroll padding to account for fixed header */
   }
 
   html {
