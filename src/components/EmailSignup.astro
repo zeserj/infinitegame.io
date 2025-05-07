@@ -15,6 +15,10 @@
         required
         class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
       />
+      
+      <div class="hidden" aria-hidden="true" style="position: absolute; left: -9999px;">
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+      </div>
     </div>
     <button 
       type="submit"
@@ -33,11 +37,46 @@
   // Form handler using server-side endpoint
   const form = document.getElementById('brevo-signup-form');
   
+  // Record form load time for timing-based bot detection
+  const formLoadTime = Date.now();
+  
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const emailInput = document.getElementById('email') as HTMLInputElement;
     const email = emailInput?.value;
+    
+    // Check honeypot field - if filled, it's likely a bot
+    const honeypotField = document.getElementById('website') as HTMLInputElement;
+    if (honeypotField && honeypotField.value) {
+      console.log('Bot submission detected via honeypot');
+      // Show success message to trick bots
+      if (form) {
+        form.innerHTML = `
+          <div class="bg-accent2/10 text-accent2 p-4 rounded-md">
+            <p class="font-medium">Thanks for signing up!</p>
+            <p class="text-sm mt-1">We'll notify you when InfiniteGame launches.</p>
+          </div>
+        `;
+      }
+      return; // Silently reject the submission
+    }
+    
+    // Check if submission is suspiciously fast (less than 2 seconds)
+    const submissionTime = Date.now();
+    if (submissionTime - formLoadTime < 2000) {
+      console.log('Bot submission detected via timing');
+      // Show success message to trick bots
+      if (form) {
+        form.innerHTML = `
+          <div class="bg-accent2/10 text-accent2 p-4 rounded-md">
+            <p class="font-medium">Thanks for signing up!</p>
+            <p class="text-sm mt-1">We'll notify you when InfiniteGame launches.</p>
+          </div>
+        `;
+      }
+      return; // Silently reject the submission
+    }
     
     if (!email) return;
     
@@ -49,13 +88,17 @@
         submitButton.setAttribute('disabled', 'true');
       }
       
-      // Call server-side endpoint instead of Brevo API directly
+      // Call server-side endpoint with honeypot data
       const response = await fetch('/api/subscribe', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email })
+        body: JSON.stringify({ 
+          email,
+          website: honeypotField?.value || '', // Include honeypot field
+          signupTime: submissionTime - formLoadTime // Include timing information
+        })
       });
       
       const data = await response.json();
