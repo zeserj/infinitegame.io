@@ -11,6 +11,41 @@ const EMAIL_SUBMISSIONS: Record<string, number[]> = {};
 const MAX_SUBMISSIONS_PER_HOUR = 5;
 const RATE_WINDOW = 60 * 60 * 1000; // 1 hour in milliseconds
 
+// Telegram notification function
+async function sendTelegramNotification(email: string) {
+  const botToken = import.meta.env.TELEGRAM_BOT_TOKEN;
+  const chatId = import.meta.env.TELEGRAM_CHAT_ID;
+  
+  if (!botToken || !chatId) {
+    console.log('Telegram bot token or chat ID not configured');
+    return;
+  }
+  
+  const message = `🎉 New waitlist signup!\n\n📧 Email: ${email}\n⏰ Time: ${new Date().toLocaleString()}`;
+  
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+        parse_mode: 'HTML'
+      })
+    });
+    
+    if (!response.ok) {
+      console.error('Failed to send Telegram notification:', await response.text());
+    } else {
+      console.log('Telegram notification sent successfully');
+    }
+  } catch (error) {
+    console.error('Error sending Telegram notification:', error);
+  }
+}
+
 // Brevo API endpoint handler
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -147,6 +182,11 @@ export const POST: APIRoute = async ({ request }) => {
     // Record this submission for rate limiting
     ipSubmissions[clientIP].push(now);
     EMAIL_SUBMISSIONS[normalizedEmail].push(now);
+    
+    // Send Telegram notification (don't await to avoid blocking the response)
+    sendTelegramNotification(email).catch(error => {
+      console.error('Failed to send Telegram notification:', error);
+    });
     
     return new Response(
       JSON.stringify({ 
