@@ -22,6 +22,10 @@ const {
   type = "website",
   publishDate
 } = Astro.props;
+
+// Set cache headers for better performance
+Astro.response.headers.set('Cache-Control', 'public, max-age=2419200');
+Astro.response.headers.set('CDN-Cache-Control', 'public, max-age=2419200');
 ---
 
 <!doctype html>
