@@ -69,13 +69,23 @@ const {
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={new URL(image, siteURL).toString()} />
     
-    <!-- Preconnect to Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- Font loading: Orbitron and Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <!-- Preload critical self-hosted fonts -->
+    <link rel="preload" href="/fonts/Inter-VariableFont_opsz,wght.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Orbitron-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Font loading optimization -->
+    <script>
+      // Add font-loaded class when fonts are loaded
+      if ('fonts' in document) {
+        Promise.all([
+          document.fonts.load('400 1rem Inter'),
+          document.fonts.load('400 1rem Orbitron')
+        ]).then(() => {
+          document.documentElement.classList.add('fonts-loaded');
+        });
+      }
+    </script>
+
     <!-- Structured data for improved rich results -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",

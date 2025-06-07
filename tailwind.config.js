@@ -11,8 +11,8 @@ export default {
         accent3: '#F97316',
       },
       fontFamily: {
-        orbitron: ['Orbitron', 'sans-serif'],
-        inter: ['Inter', 'sans-serif'],
+        orbitron: ['Orbitron', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+        inter: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
       },
     },
   },
