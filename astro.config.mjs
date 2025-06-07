@@ -4,8 +4,18 @@ import node from '@astrojs/node';
 
 export default defineConfig({
   integrations: [tailwind()],
-  output: 'static', // Changed from 'hybrid' to 'server'
+  output: 'server',
   adapter: node({
-    mode: 'standalone' // This mode works best with Coolify
-  })
+    mode: 'standalone'
+  }),
+  vite: {
+    build: {
+      rollupOptions: {
+        output: {
+          // Add hashes to asset filenames for better caching
+          assetFileNames: 'assets/[name].[hash][extname]'
+        }
+      }
+    }
+  }
 });

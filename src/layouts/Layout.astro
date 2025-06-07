@@ -22,6 +22,14 @@ const {
   type = "website",
   publishDate
 } = Astro.props;
+
+// Set cache headers for HTML pages
+if (Astro.response) {
+  // Cache HTML pages for 1 hour
+  Astro.response.headers.set('Cache-Control', 'public, max-age=3600');
+  // Add ETag for better caching
+  Astro.response.headers.set('ETag', `"${Date.now()}"`);
+}
 ---
 
 <!doctype html>
